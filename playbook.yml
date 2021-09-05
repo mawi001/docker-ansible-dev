@@ -1,0 +1,19 @@
+---
+- name: Deploy project
+  hosts:
+    - localhost
+  tasks:
+    - name: Add an Apt signing key, uses whichever key is at the URL
+      ansible.builtin.apt_key:
+        url: https://apt.releases.hashicorp.com/gpg
+        state: present
+
+    - name: Add specified repository into sources list
+      ansible.builtin.apt_repository:
+        repo: deb https://apt.releases.hashicorp.com focal main
+        state: present
+
+    - name: Install terraform
+      package:
+        name: terraform
+        state: present
